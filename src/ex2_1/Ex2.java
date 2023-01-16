@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Ex2 {
@@ -64,8 +65,8 @@ public class Ex2 {
             return filesNames;
         }
 
-        private static long linesCounter(BufferedReader file){
-            long lines = 0;
+        private static int linesCounter(BufferedReader file){
+            int lines = 0;
 
             try {
                 while (file.readLine()!=null){
@@ -79,11 +80,11 @@ public class Ex2 {
 
         }
 
-        public static long getNumOfLines(String[] fileNames) {
+        public static int getNumOfLines(String[] fileNames) {
 
             BufferedReader bf;
-            long numberOfFiles = fileNames.length;
-            long total_lines = 0;
+            int numberOfFiles = fileNames.length;
+            int total_lines = 0;
             String name = "";
 
             for (String fileName : fileNames) {
@@ -101,93 +102,9 @@ public class Ex2 {
             return total_lines;
         }
 
-        public long getNumOfLinesThreads1(String[] fileNames) {
+        public int getNumOfLinesThreads(String[] fileNames){
 
-            AtomicLong total_lines = new AtomicLong();
-
-            for (String names  : fileNames){
-                CounterThread current = new CounterThread(names);
-                current.start();
-
-                try {
-                    current.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                total_lines.addAndGet(current.getCounter());
-            }
-
-            return total_lines.get();
-        }
-
-        public Long getNumOfLinesThreads2(String[] fileNames) {
-
-            AtomicLong total_lines = new AtomicLong();
-
-            List<CounterThread> list = new ArrayList<>();
-
-            int n = fileNames.length;
-
-            for (String names : fileNames){
-                list.add(new CounterThread(names));
-            }
-
-            for (CounterThread current : list){
-                current.start();
-                try {
-                    current.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            for (CounterThread current : list){
-                total_lines.addAndGet(current.getCounter());
-            }
-
-
-
-            return total_lines.get();
-        }
-
-        public Long getNumOfLinesThreads3(String[] fileNames){
-
-            AtomicLong total_lines = new AtomicLong();
-
-            List<CounterThread> threads = new ArrayList<>();
-
-            CounterThread t;
-
-            for (String file : fileNames){
-                t = new CounterThread(file);
-                t.start();
-                threads.add(t);
-            }
-
-            ListIterator<CounterThread> prev = threads.listIterator(threads.size());
-
-            while (prev.hasPrevious()){
-                try {
-                    prev.previous().join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            for (CounterThread curr : threads){
-                total_lines.addAndGet(curr.getCounter());
-            }
-
-
-
-            return total_lines.get();
-
-
-        }
-
-        public Long getNumOfLinesThreads4(String[] fileNames){
-
-            AtomicLong total_lines = new AtomicLong();
+            AtomicInteger total_lines = new AtomicInteger();
 
             List<CounterThread> threads = new ArrayList<>();
 
@@ -221,7 +138,7 @@ public class Ex2 {
 
         }
 
-        public long getNumOfLinesThreadPool(String[] fileNames){
+        public int getNumOfLinesThreadPool(String[] fileNames){
 
             int length = fileNames.length;
 
@@ -238,6 +155,91 @@ public class Ex2 {
             return ThreadsForPool.getTotal_lines().get();
 
         }
+
+        public int getNumOfLinesThreads2(String[] fileNames) {
+
+            AtomicInteger total_lines = new AtomicInteger();
+
+            List<CounterThread> list = new ArrayList<>();
+
+            int n = fileNames.length;
+
+            for (String names : fileNames){
+                list.add(new CounterThread(names));
+            }
+
+            for (CounterThread current : list){
+                current.start();
+                try {
+                    current.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            for (CounterThread current : list){
+                total_lines.addAndGet(current.getCounter());
+            }
+
+
+
+            return total_lines.get();
+        }
+
+        public int getNumOfLinesThreads3(String[] fileNames){
+
+            AtomicInteger total_lines = new AtomicInteger();
+
+            List<CounterThread> threads = new ArrayList<>();
+
+            CounterThread t;
+
+            for (String file : fileNames){
+                t = new CounterThread(file);
+                t.start();
+                threads.add(t);
+            }
+
+            ListIterator<CounterThread> prev = threads.listIterator(threads.size());
+
+            while (prev.hasPrevious()){
+                try {
+                    prev.previous().join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            for (CounterThread curr : threads){
+                total_lines.addAndGet(curr.getCounter());
+            }
+
+
+
+            return total_lines.get();
+
+
+        }
+
+        public int getNumOfLinesThreads4(String[] fileNames) {
+
+            AtomicInteger total_lines = new AtomicInteger();
+
+            for (String names  : fileNames){
+                CounterThread current = new CounterThread(names);
+                current.start();
+
+                try {
+                    current.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                total_lines.addAndGet(current.getCounter());
+            }
+
+            return total_lines.get();
+        }
+
 
 
 
