@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 public class ThreadsForPool implements Callable<Object> {
 
@@ -19,8 +19,8 @@ public class ThreadsForPool implements Callable<Object> {
         this.fileName = fileName;
     }
 
-    public static AtomicInteger getTotal_lines (){
-        return total_lines;
+    public static int getTotal_lines (){
+        return total_lines.get();
     }
 
     @Override

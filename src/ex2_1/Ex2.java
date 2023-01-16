@@ -144,15 +144,15 @@ public class Ex2 {
 
             ExecutorService pool = Executors.newFixedThreadPool(length);
 
-
-
             for (String name : fileNames){
                 pool.submit(new ThreadsForPool(name));
             }
 
             pool.shutdown();
 
-            return ThreadsForPool.getTotal_lines().get();
+            while (!(pool.isTerminated()));
+
+            return ThreadsForPool.getTotal_lines();
 
         }
 
