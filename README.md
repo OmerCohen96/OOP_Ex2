@@ -1,5 +1,5 @@
 
-##Ex_2_1
+### Ex_2_1
 
 in this assigment we were ask to implement a three diffrents methods,
 to count the amount of lines in text files that we generate with *RANDOM* number of lines.
@@ -53,7 +53,7 @@ with minor changes with function 2 and 3
 
 
 
-##Ex_2_2
+### Ex_2_2
 
 "CustomExecutor" that extends the ThreadPoolExecutor class.
 It uses a PriorityBlockingQueue to hold its tasks and allows for tasks to be submitted with a priority level.
