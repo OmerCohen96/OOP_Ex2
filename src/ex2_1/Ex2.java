@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -138,6 +140,7 @@ public class Ex2 {
 
         }
 
+
         public int getNumOfLinesThreadPool(String[] fileNames){
 
             int length = fileNames.length;
@@ -155,6 +158,38 @@ public class Ex2 {
             return ThreadsForPool.getTotal_lines();
 
         }
+
+        public int getNumOfLinesThreadPool2(String[] fileNames){
+
+            int length = fileNames.length;
+
+            ExecutorService pool = Executors.newFixedThreadPool(length);
+
+            List<Future<AtomicInteger>> allTasks = new ArrayList<>();
+
+            for (int i = 0 ; i < length ; i++){
+                Future<AtomicInteger> curr = pool.submit(new ThreadsForPoolInteger(fileNames[i]));
+                allTasks.add(curr);
+            }
+
+            pool.shutdown();
+
+            AtomicInteger num = new AtomicInteger();
+
+            for (Future<AtomicInteger> result : allTasks) {
+                try {
+                    num.addAndGet(result.get().get());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+            return num.get();
+        }
+
 
         public int getNumOfLinesThreads2(String[] fileNames) {
 

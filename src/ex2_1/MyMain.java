@@ -24,36 +24,37 @@ public class MyMain {
         return list;
      }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
 
 
-        int n = 500;
+        int n = 5000;
+////
+       String[] s = generate_Text_File_Array(n);
 
-        String[] s = generate_Text_File_Array(n);
+//        String[] s = Ex2.Ex2_1.createTextFiles(n, (int)(System.currentTimeMillis()/100000) , 82000);
+////
+       Ex2.Ex2_1 test2 = new Ex2.Ex2_1();
+//////
+//////
+///       delete_from_main(500);
+
+////
+////
+////// ---------------------------------------------------------------------------------------------------------------------
+////
+//        long one = System.currentTimeMillis();
 //
-        Ex2.Ex2_1 test2 = new Ex2.Ex2_1();
+//        int x = Ex2.Ex2_1.getNumOfLines(s);
 //
+//        long two = System.currentTimeMillis();
 //
-////        delete_from_main(1000);
-
-//        String[] s = Ex2.Ex2_1.createTextFiles(n, (int)(System.currentTimeMillis()/100000) , 3500000);
-
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-        long one = System.currentTimeMillis();
-
-        int x = Ex2.Ex2_1.getNumOfLines(s);
-
-        long two = System.currentTimeMillis();
-
-        System.out.println("[NO THREADS] \nlines: "+x+" time: "+((two-one)/1000.0)+" seconds");
-
-
-
-// ---------------------------------------------------------------------------------------------------------------------
-
+//        System.out.println("[NO THREADS] \nlines: "+x+" time: "+((two-one)/1000.0)+" seconds");
+////
+////
+////
+////// ---------------------------------------------------------------------------------------------------------------------
+////
         long one1 = System.currentTimeMillis();
 
         int y = test2.getNumOfLinesThreads(s);
@@ -61,37 +62,45 @@ public class MyMain {
         long two1 = System.currentTimeMillis();
 
         System.out.println("[USE THREADS] \nlines: "+y+" time: "+((two1-one1)/1000.0)+" seconds");
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-//        long one2 = System.currentTimeMillis();
 //
-//        Long d = test2.getNumOfLinesThreads3(s);
+////// ---------------------------------------------------------------------------------------------------------------------
+////
+//////        long one2 = System.currentTimeMillis();
+//////
+//////        Long d = test2.getNumOfLinesThreads3(s);
+//////
+//////        long two2 = System.currentTimeMillis();
+//////
+//////        System.out.println("getNumOfLinesThreads3 --------------- lines: "+d+"-----------------\n"+(double)((two2-one2)/1000.0)+" seconds");
+////
+////// ---------------------------------------------------------------------------------------------------------------------
+////
+//////        long one3 = System.currentTimeMillis();
+//////
+//////        Long p = test2.getNumOfLinesThreads4(s);
+//////
+//////        long two3 = System.currentTimeMillis();
+//////
+//////        System.out.println("getNumOfLinesThreads4 ----------------lines: "+p+"-----------------\ntime: "+(double)((two3-one3)/1000.0)+" seconds");
+//////
+//////// ---------------------------------------------------------------------------------------------------------------------
+////
+//        long one4 = System.currentTimeMillis();
 //
-//        long two2 = System.currentTimeMillis();
+//        int z = test2.getNumOfLinesThreadPool(s);
 //
-//        System.out.println("getNumOfLinesThreads3 --------------- lines: "+d+"-----------------\n"+(double)((two2-one2)/1000.0)+" seconds");
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-//        long one3 = System.currentTimeMillis();
+//        long two4 = System.currentTimeMillis();
 //
-//        Long p = test2.getNumOfLinesThreads4(s);
+//        System.out.println("[THREAD_POOL] \nlines: "+z+" time: "+((two4-one4)/1000.0)+" seconds");
+////// ---------------------------------------------------------------------------------------------------------------------
 //
-//        long two3 = System.currentTimeMillis();
-//
-//        System.out.println("getNumOfLinesThreads4 ----------------lines: "+p+"-----------------\ntime: "+(double)((two3-one3)/1000.0)+" seconds");
-//
-//// ---------------------------------------------------------------------------------------------------------------------
+        long one5 = System.currentTimeMillis();
 
-        long one4 = System.currentTimeMillis();
+        int g = test2.getNumOfLinesThreadPool2(s);
 
-        int z = test2.getNumOfLinesThreadPool(s);
+        long two5 = System.currentTimeMillis();
 
-        long two4 = System.currentTimeMillis();
-
-        System.out.println("[THREAD_POOL] \nlines: "+z+" time: "+((two4-one4)/1000.0)+" seconds");
-// ---------------------------------------------------------------------------------------------------------------------
+        System.out.println("[THREAD_POOL 2] \nlines: "+g+" time: "+((two5-one5)/1000.0)+" seconds");
 
 //      delete_from_main(n);
 
