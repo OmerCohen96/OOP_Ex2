@@ -103,7 +103,6 @@ public class Ex2 {
             }
             return total_lines;
         }
-
         public int getNumOfLinesThreads(String[] fileNames){
 
             AtomicInteger total_lines = new AtomicInteger();
@@ -139,27 +138,7 @@ public class Ex2 {
 
 
         }
-
-
         public int getNumOfLinesThreadPool(String[] fileNames){
-
-            int length = fileNames.length;
-
-            ExecutorService pool = Executors.newFixedThreadPool(length);
-
-            for (String name : fileNames){
-                pool.submit(new ThreadsForPool(name));
-            }
-
-            pool.shutdown();
-
-            while (!(pool.isTerminated()));
-
-            return ThreadsForPool.getTotal_lines();
-
-        }
-
-        public int getNumOfLinesThreadPool2(String[] fileNames){
 
             int length = fileNames.length;
 
@@ -189,92 +168,6 @@ public class Ex2 {
 
             return num.get();
         }
-
-
-        public int getNumOfLinesThreads2(String[] fileNames) {
-
-            AtomicInteger total_lines = new AtomicInteger();
-
-            List<CounterThread> list = new ArrayList<>();
-
-            int n = fileNames.length;
-
-            for (String names : fileNames){
-                list.add(new CounterThread(names));
-            }
-
-            for (CounterThread current : list){
-                current.start();
-                try {
-                    current.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            for (CounterThread current : list){
-                total_lines.addAndGet(current.getCounter());
-            }
-
-
-
-            return total_lines.get();
-        }
-
-        public int getNumOfLinesThreads3(String[] fileNames){
-
-            AtomicInteger total_lines = new AtomicInteger();
-
-            List<CounterThread> threads = new ArrayList<>();
-
-            CounterThread t;
-
-            for (String file : fileNames){
-                t = new CounterThread(file);
-                t.start();
-                threads.add(t);
-            }
-
-            ListIterator<CounterThread> prev = threads.listIterator(threads.size());
-
-            while (prev.hasPrevious()){
-                try {
-                    prev.previous().join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            for (CounterThread curr : threads){
-                total_lines.addAndGet(curr.getCounter());
-            }
-
-
-
-            return total_lines.get();
-
-
-        }
-
-        public int getNumOfLinesThreads4(String[] fileNames) {
-
-            AtomicInteger total_lines = new AtomicInteger();
-
-            for (String names  : fileNames){
-                CounterThread current = new CounterThread(names);
-                current.start();
-
-                try {
-                    current.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                total_lines.addAndGet(current.getCounter());
-            }
-
-            return total_lines.get();
-        }
-
 
 
 
